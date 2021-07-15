@@ -1,0 +1,139 @@
+.list-item-group {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(102, 102, 102, 0.15);
+  opacity: 1;
+  border-radius: 10px;
+
+  .list-item-header,
+  .list-item-footer {
+    display: flex;
+    overflow: hidden;
+
+    div {
+      span.type-item {
+        display: inline-block;
+        margin-right: 40px;
+        font-size: 16px;
+        font-weight: 400;
+
+        >span.label {
+          font-weight: bold;
+        }
+      }
+
+      span.update-time {
+        font-size: 12px;
+      }
+    }
+
+    .item-head-r {
+      flex: 1 auto;
+      text-align: right;
+
+      .ant-btn {
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .list-item-header {
+    cursor: pointer;
+  }
+
+  .list-item-content {
+    overflow: hidden;
+    cursor: pointer;
+
+    div {
+      font-size: 20px;
+      font-weight: 400;
+
+      p,
+      span {
+        font-size: 20px;
+        font-weight: 400;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .item-option-list {
+      overflow: hidden;
+
+      .item-option-box {
+        float: left;
+        display: flex;
+        margin-right: 20px;
+
+        .item-option-bs {
+          width: 20px;
+        }
+
+        .item-option-item {
+          flex: 1 auto;
+          display: inline-block;
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .item-answer-box {
+      .item-answer-section {
+        padding: 5px 0;
+        font-size: 16px;
+        font-weight: 400;
+
+        .type-label {
+          display: inline-block;
+          font-weight: bold;
+          color: #409eff;
+          vertical-align: top;
+        }
+
+        div.answer-content,
+        div.answer-analysis {
+          display: inline-block;
+          font-size: 16px;
+          font-weight: 400;
+          vertical-align: top;
+
+          p,
+          span {
+            font-size: 20px;
+            font-weight: 400;
+          }
+
+          /deep/p {
+            margin: 0;
+            padding: 0;
+          }
+        }
+
+        .item-kownledge-list {
+          display: inline-block;
+
+          .item-kownledge-item-container {
+            display: inline-block;
+
+            .item-kownledge-item {
+              padding: 0 2px;
+            }
+
+            .divide-v-line {
+              padding: 0 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .list-item-footer {
+    padding-top: 10px;
+  }
+}

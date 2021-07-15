@@ -1,0 +1,277 @@
+/deep/.ant-upload-list {
+  float: right;
+}
+
+/deep/.ant-modal-content {
+  width: 1000px;
+
+  // height: 1100px;
+  .ant-modal-close {
+    width: 65px;
+    height: 65px;
+
+    .ant-modal-close-x {
+      width: 65px;
+      height: 65px;
+      position: relative;
+
+      i {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        border: 1px solid black;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          margin: 1.5px auto;
+
+          path {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .ant-modal-header {
+    padding: 0;
+    border: none;
+
+    .ant-modal-title {
+      text-align: center;
+      font-size: 32px;
+      font-family: Microsoft YaHei;
+      font-weight: bold;
+      color: #000000;
+      padding-top: 25px;
+      padding-bottom: 40px;
+    }
+  }
+
+  .ant-modal-body {
+    padding-top: 0;
+    padding: 0 86px 104px;
+
+    // 计划信息
+    .plan.ant-form-horizontal {
+      .ant-row {
+        .ant-col {
+          .ant-row {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 0;
+
+            .ant-form-item-label {
+              label {
+                font-size: 16px;
+              }
+            }
+
+            .ant-form-item-control-wrapper {
+              margin-left: 10px;
+
+              .ant-form-item-control {
+                .ant-form-item-children {
+                  input {
+                    border: none;
+                    background-color: white;
+                    font-size: 16px;
+                    font-family: Microsoft YaHei;
+                    font-weight: 400;
+                    color: #000000;
+                  }
+
+                  i {
+                    display: none;
+                  }
+
+                  .ant-upload {
+                    .ant-btn {
+                      border: none;
+                      padding: 0;
+
+                      span {
+                        font-size: 16px;
+                        font-family: Microsoft YaHei;
+                        font-weight: 400;
+                        text-decoration: underline;
+                        color: #409eff;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .title.ant-row {
+            margin-top: 0;
+            font-size: 20px;
+            font-family: Microsoft YaHei;
+            font-weight: bold;
+            color: #000000;
+
+            .ant-form-item-label {
+              label {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // 项目信息
+    .project.ant-form-horizontal {
+      margin-top: 20px;
+
+      .ant-row {
+
+        // height: 20px;
+        .ant-col {
+          .ant-row {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 0;
+
+            .ant-form-item-label {
+              label {
+                font-size: 16px;
+              }
+            }
+
+            .ant-form-item-control-wrapper {
+              margin-left: 30px;
+
+              .ant-form-item-control {
+                .ant-form-item-children {
+                  .ant-input-search {
+                    width: 150px;
+
+                    .ant-input-wrapper {
+                      input {
+                        // display: none;
+                        border: none;
+                        // width: 100px;
+                      }
+
+                      .ant-input-group-addon {
+                        background-color: white;
+                        text-align: left;
+
+                        .ant-btn {
+                          border: none;
+                          padding: 0;
+
+                          span {
+                            display: none;
+                          }
+
+                          i {}
+                        }
+                      }
+                    }
+                  }
+
+                  span {
+                    .ant-upload {
+                      .ant-upload {
+                        .ant-btn {
+                          border: none;
+                          padding: 0;
+
+                          i {
+                            display: none;
+                          }
+
+                          span {
+                            font-size: 16px;
+                            font-family: Microsoft YaHei;
+                            font-weight: 400;
+                            text-decoration: underline;
+                            color: #409eff;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .title.ant-row {
+            margin-top: 0;
+            font-size: 20px;
+            font-family: Microsoft YaHei;
+            font-weight: bold;
+            color: #000000;
+
+            .ant-form-item-label {
+              label {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
+
+      .ant-row:nth-child(4),
+      .ant-row:nth-child(6),
+      .ant-row:nth-child(8) {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .ant-modal-footer {
+    border: none;
+    padding: 0;
+    padding-bottom: 40px;
+
+    div {
+      width: 320px;
+      height: 40px;
+      margin: 0 auto;
+      position: relative;
+
+      .ant-btn {
+        width: 150px;
+        height: 40px;
+        border: none;
+        color: #ffffff;
+      }
+
+      .ant-btn:first-child {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #999999;
+        border-radius: 10px;
+      }
+
+      .ant-btn:last-child {
+        margin-left: 20px;
+        position: absolute;
+        top: 0;
+        left: -20px;
+        background: #409eff;
+        border-radius: 10px;
+      }
+
+      // .ant-btn:last-child{}
+    }
+  }
+}

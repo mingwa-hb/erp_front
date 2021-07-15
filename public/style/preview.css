@@ -1,0 +1,271 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+input::-ms-clear,
+input::-ms-reveal {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+article,
+aside,
+dialog,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+hr {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: inherit;
+}
+
+
+.binding-line-wrap {
+  width: 100%;
+}
+
+.binding-line-wrap img {
+  width: 120px;
+  height: 100%;
+}
+
+
+.shiti-item-control {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.shiti-item-control p {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.shiti-item-control .shiti-item-content .shiti-contents {
+  font-size: 14px;
+  text-align: left;
+}
+
+.shiti-item-control .shiti-item-content .shiti-contents .shiti-score {
+  font-size: 14px;
+}
+
+.shiti-item-control .shiti-item-content table.shiti-opts-list {
+  border: 0px solid #e8e8e8;
+  overflow: hidden;
+}
+
+.shiti-item-control .shiti-item-content table.shiti-opts-list tr.shiti-opts-row td.shiti-opts-col .shiti-opts-bs {
+  font-size: 14px;
+}
+
+.shiti-item-control .shiti-item-content table.shiti-opts-list tr.shiti-opts-row td.shiti-opts-col .shiti-opts-item {
+  margin-left: 0;
+}
+
+.shiti-item-control .shiti-item-content table.shiti-opts-list tr.shiti-opts-row td.shiti-opts-col .shiti-opts-item p {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.shiti-item-control .shiti-item-content table.shiti-opts-list tr.shiti-opts-row td.shiti-opts-col .shiti-opts-item span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.shiti-item-control .shiti-item-content p,
+.shiti-item-control .shiti-item-content span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.shiti-item-control .shiti-item-content p {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+.group-section-box {
+  padding: 0 10px;
+  background-color: #ffffff;
+}
+
+.group-section-box p.group-section-nowrap {
+  width: 100%;
+  height: 3em;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+.group-section-box .group-pingfen-container {
+  border-radius: 2px;
+}
+
+.group-section-box .group-pingfen-container .group-pingfen-table {
+  border: 2px solid #e8e8e8;
+  border-collapse: collapse;
+}
+
+.group-section-box .group-pingfen-container .group-pingfen-table .pingfen-row-tr .pingfen-row-td {
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #e8e8e8;
+}
+
+.group-section-box .group-shiti-container {
+  margin-top: 0;
+  border: 1px solid transparent;
+}
+
+.group-section-box .group-shiti-container .group-shiti-head .group-shiti-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.group-section-box .group-shiti-container .group-shiti-list .group-shiti-wrap {
+  font-size: 14px;
+}
+
+
+ .page-section-main {
+  margin-left: 10px;
+  padding: 20px 5px 10px 5px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view {
+  position: relative;
+  min-height: 1000px;
+  overflow: hidden;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-side {
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  margin: 0 auto;
+  z-index: 99;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body {
+  position: relative;
+  padding-left: 20px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info {
+  padding: 0px 10px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info h1,
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info h3 {
+  text-align: center;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .stu-info-box {
+  text-align: center;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .stu-info-box p .info-label {
+  padding: 0 5px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .stu-info-box p .info-input {
+  display: inline-block;
+  min-width: 200px;
+  margin-right: 10px;
+  text-align: left;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .stu-info-box p .info-input img {
+  height: 1px;
+  margin-top: 10px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .note-attention-box p {
+  font-size: 14px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .note-attention-box p .space {
+  padding: 0 5px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-base-info .note-attention-box .note-title {
+  letter-spacing: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .group-score-box {
+  border-radius: 2px;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .group-score-box .group-score-table {
+  border: 1px solid #e8e8e8;
+  border-collapse: collapse;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .group-score-box .group-score-table .score-row-tr .score-row-td {
+  width: 140px;
+  padding: 5px;
+  border: 1px solid #e8e8e8;
+}
+ .page-section-main .WordSection1 .page-main-wrap .page-main-scroll_view .page-main-body .paper-shiti-list {
+  overflow: hidden;
+}

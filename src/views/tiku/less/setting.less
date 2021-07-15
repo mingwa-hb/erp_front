@@ -1,0 +1,171 @@
+.page-container {
+  .page-section-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+
+    .page-section-side {
+      border-radius: 4px;
+      padding: 20px 5px 10px 5px;
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      box-shadow: 0px 0px 10px rgba(102, 102, 102, 0.15);
+      opacity: 1;
+
+      .page-section-side-control {
+        width: 320px;
+        margin-bottom: 10px;
+
+        >h3 {
+          padding: 10px;
+          border-radius: 10px 10px 0px 0px;
+          font-size: 24px;
+          color: #FFFFFF;
+          background-color: #409EFF;
+          text-align: center;
+        }
+
+        .setting-form-container {
+          .form-row-control {
+            display: flex;
+            padding: 0 10px;
+
+            .ant-form-item {
+              flex: 1;
+              margin-bottom: 5px;
+            }
+          }
+
+          .line-bottom {
+            border-bottom: 1px solid #e8e8e8;
+          }
+        }
+
+        .ant-row-flex {
+          margin: 10px auto;
+        }
+
+        .page-row-act-control {
+          margin: 10px;
+
+
+          .ant-btn {
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+
+    .page-section-main {
+      flex: 1 auto;
+      margin-left: 10px;
+      padding: 20px 5px 10px 5px;
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      box-shadow: 0px 0px 10px rgba(102, 102, 102, 0.15);
+      opacity: 1;
+
+      .page-main-wrap {
+        .page-main-scroll_view {
+          position: relative;
+          min-height: 1000px;
+          overflow: hidden;
+
+          .page-main-side {
+            position: relative;
+            left: 10px;
+            top: 0;
+            width: 120px;
+            height: 100%;
+            margin: 0 auto;
+            z-index: 99;
+          }
+
+          .page-main-body {
+            position: relative;
+            padding-left: 20px;
+
+            .paper-base-info {
+              padding: 0px 10px;
+
+              h1,
+              h3 {
+                text-align: center;
+              }
+
+              h1 {
+                font-size: 24px;
+                font-weight: bold;
+              }
+
+              h3 {
+                font-size: 20px;
+                font-weight: 500;
+              }
+
+              .stu-info-box {
+                text-align: center;
+
+                p {
+                  .info-label {
+                    padding: 0 5px;
+                  }
+
+                  .info-input {
+                    display: inline-block;
+                    min-width: 200px;
+                    margin-right: 10px;
+                    text-align: left;
+
+                    img {
+                      height: 1px;
+                      margin-top: 10px;
+                    }
+                  }
+                }
+              }
+
+              .note-attention-box {
+                p {
+                  font-size: 14px;
+
+                  .space {
+                    padding: 0 5px;
+                  }
+                }
+
+                .note-title {
+                  letter-spacing: 10px;
+                  font-size: 18px;
+                  font-weight: bold;
+                  text-align: center;
+                }
+              }
+            }
+
+            .group-score-box {
+              border-radius: 2px;
+
+              .group-score-table {
+                border: 1px solid #e8e8e8;
+                border-collapse: collapse;
+
+                .score-row-tr {
+                  .score-row-td {
+                    width: 160px;
+                    padding: 5px;
+                    border: 1px solid #e8e8e8;
+                  }
+                }
+              }
+            }
+
+            .paper-shiti-list {
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}
