@@ -17,8 +17,8 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入湖北明蛙教育管理系统</span>
-      <span v-else>欢迎进入湖北明蛙教育管理系统</span>
+      <span v-if="device === 'desktop'">欢迎进入武汉九达缘起大金融终端</span>
+      <span v-else>武汉九达缘起大金融终端</span>
 
       <user-menu :theme="theme"/>
     </div>

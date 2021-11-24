@@ -4,11 +4,11 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/mingwalogo.png" class="logo" alt="logo" />
+            <!--<img src="~@/assets/mingwalogo.png" class="logo" alt="logo" />-->
           </a>
         </div>
         <div class="desc">
-          湖北明蛙教育管理系统
+          武汉九达缘起大金融终端
         </div>
       </div>
 

@@ -173,6 +173,10 @@ const studentInformationTracking_dealRecord = (params) => postAction("/erp/sysTr
 const auditApplyInfo = (params) => postAction("/erp/stuApplyInfo/auditMwUser", params);
 const auditApplyInfoNew = (params) => postAction("/erp/task/auditTask", params);
 
+//Stock
+const addStockGroup = (params) => postAction("/erp/stockGroup/add",params);
+const editStockGroup = (params) => postAction("/erp/stockGroup/edit",params);
+
 
 // 中转HTTP请求
 export const transitRESTful = {
@@ -269,5 +273,7 @@ export {
   tikuApiList,
   testPlanApiList,
   taskApiList,
-  customApiList
+  customApiList,
+  addStockGroup,
+  editStockGroup,
 }
