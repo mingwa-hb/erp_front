@@ -8,14 +8,32 @@
             <a-form-item label="分组名称">
               <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
               <a-auto-complete
-                v-model.trim="queryParam.name"
-                @search="handleSearch"
+                v-model.trim="queryParam.groupName"
                 placeholder="请输入分组名称进行查询"
               >
               </a-auto-complete>
             </a-form-item>
           </a-col>
-
+          <a-col :md="6" :sm="8">
+            <a-form-item label="代码">
+              <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
+              <a-auto-complete
+                v-model.trim="queryParam.name"
+                placeholder="请输入代码进行查询"
+              >
+              </a-auto-complete>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="名称">
+              <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
+              <a-auto-complete
+                v-model.trim="queryParam.code"
+                placeholder="请输入名称进行查询"
+              >
+              </a-auto-complete>
+            </a-form-item>
+          </a-col>
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -81,11 +99,11 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?(与该分组关联的自选股都会被放到回收站!)" @confirm="() => deleteSingle(record.id)">
+          <a-popconfirm title="确定删除吗?(会被放到回收站!)" @confirm="() => deleteSingle(record.id)">
             <a>删除</a>
           </a-popconfirm>
            <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?(与该分组关联的自选股都会被放到回收站!)" @confirm="() => deleteRealSingle(record.id)">
+          <a-popconfirm title="确定删除吗?(会删掉数据!)" @confirm="() => deleteRealSingle(record.id)">
             <a>硬删除</a>
           </a-popconfirm>
         </span>
@@ -94,26 +112,26 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <stock-group-modal ref="modalForm" @ok="modalFormOk" />
+    <ori-stock-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
 import JEllipsis from '@/components/jeecg/JEllipsis'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-import StockGroupModal from './modules/StockGroupModal'
+import OriStockModal from './modules/OriStockModal'
 import { deleteAction, getAction } from '@/api/manage'
 import axios from 'axios'
 import moment from 'moment'
 
 export default {
-  name: 'StockGroup',
+  name: 'OriStock',
   mixins: [JeecgListMixin],
-  components: { JEllipsis, StockGroupModal },
+  components: { JEllipsis, OriStockModal },
   data() {
     let ellipsis = (v, l = 20) => <j-ellipsis value={v} length={l} />
     return {
-      description: '分组管理',
+      description: '股票管理',
       // 表头
       result: [],
       columns: [
@@ -126,14 +144,14 @@ export default {
           customRender: (t, r, index) => index + 1,
         },
         {
-          title: '分组名称',
+          title: '名称',
           align: 'center',
           dataIndex: 'name',
         },
         {
-          title: '分组昵称',
+          title: '代码',
           align: 'center',
-          dataIndex: 'alias',
+          dataIndex: 'code',
         },
         {
           title: '状态',
@@ -147,9 +165,20 @@ export default {
           customRender: (t) => ellipsis(t),
         },
         {
+          title: '区域',
+          align: 'center',
+          dataIndex: 'area',
+          customRender: (t) => ellipsis(t),
+        },
+        {
           title: '创建人',
           align: 'center',
           dataIndex: 'createBy',
+        },
+        {
+          title: '创建时间',
+          align: 'center',
+          dataIndex: 'createTime',
         },
         {
           title: '操作',
@@ -160,12 +189,12 @@ export default {
         },
       ],
       url: {
-        list: '/erp/stockGroup/list',
-        delete: '/erp/stockGroup/delete',
-        deleteBatch: '/erp/stockGroup/deleteBatch',
-        realDelete: '/erp/stockGroup/realDelete',
-        exportXlsUrl: 'erp/stockGroup/exportXls',
-        importExcelUrl: 'erp/stockGroup/importExcel',
+        list: '/erp/oriStock/list',
+        delete: '/erp/oriStock/delete',
+        deleteBatch: '/erp/oriStock/deleteBatch',
+        realDelete: '/erp/oriStock/realDelete',
+        exportXlsUrl: 'erp/oriStock/exportXls',
+        importExcelUrl: 'erp/oriStock/importExcel',
       },
     }
   },
@@ -181,8 +210,8 @@ export default {
     deleteSingle(id) {
           var that = this
             this.$confirm({
-              title: '该分组有关联的自选股，请确认是否删除！',
-              content: '点击OK按钮后，与该分组关联的自选股都会删除!',
+              title: '请确认是否删除！',
+              content: '点击OK按钮后，自选股被放入回收站!',
               okType: 'danger',
               okText: '删除',
               cancelText: '取消',
@@ -202,8 +231,8 @@ export default {
     deleteRealSingle(id) {
           var that = this
             this.$confirm({
-              title: '该分组有关联的自选股，请确认是否真正删除！',
-              content: '点击OK按钮后，与该分组关联的自选股都会删除!',
+              title: '请确认是否真正删除！',
+              content: '点击OK按钮后，自选股会被真正删除!',
               okType: 'danger',
               okText: '删除',
               cancelText: '取消',
@@ -219,19 +248,6 @@ export default {
               },
               onCancel() {},
             })
-    },
-    handleSearch(value) {
-      // console.log('handleSearch', value);
-      //this.result  =  ['上海', '武汉', '北京'];
-      let paramJson = {
-        name: value,
-      }
-      console.log('value:', value)
-      getAction('/erp/stockGroup/list', paramJson).then((res) => {
-        if (res.success) {
-          this.result = res.result
-        }
-      })
     },
     onSelect(value) {
       console.log('onSelect', value)

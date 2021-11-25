@@ -177,6 +177,9 @@ const auditApplyInfoNew = (params) => postAction("/erp/task/auditTask", params);
 const addStockGroup = (params) => postAction("/erp/stockGroup/add",params);
 const editStockGroup = (params) => postAction("/erp/stockGroup/edit",params);
 
+const addStock = (params) => postAction("/erp/oriStock/add",params);
+const editStock = (parms) => postAction("/erp/oriStock/edit",params);
+
 
 // 中转HTTP请求
 export const transitRESTful = {
@@ -276,4 +279,6 @@ export {
   customApiList,
   addStockGroup,
   editStockGroup,
+  addStock,
+  editStock,
 }
