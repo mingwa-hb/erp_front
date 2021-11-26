@@ -16,14 +16,14 @@ const apiUrl_dev = {
  * 测试环境
  */
 const apiUrl_test = {
-  baseUrl: '//10.7.196.27:8080', //开发环境
+  baseUrl: '//120.76.194.22:8080', //开发环境
 }
 
 /*
  * 正式环境
  */
 const apiUrl_pro = {
-  baseUrl: '//10.7.196.27:8080',
+  baseUrl: '//120.76.194.22:8080',
 };
 
 /**
