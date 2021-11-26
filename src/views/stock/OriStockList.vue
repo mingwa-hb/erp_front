@@ -18,7 +18,7 @@
             <a-form-item label="代码">
               <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
               <a-auto-complete
-                v-model.trim="queryParam.name"
+                v-model.trim="queryParam.code"
                 placeholder="请输入代码进行查询"
               >
               </a-auto-complete>
@@ -28,7 +28,7 @@
             <a-form-item label="名称">
               <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
               <a-auto-complete
-                v-model.trim="queryParam.code"
+                v-model.trim="queryParam.name"
                 placeholder="请输入名称进行查询"
               >
               </a-auto-complete>
@@ -154,6 +154,32 @@ export default {
           dataIndex: 'code',
         },
         {
+          title: '区域',
+          align: 'center',
+          dataIndex: 'area',
+          customRender: (t) => ellipsis(t),
+        },
+        {
+          title: '分组',
+          align: 'center',
+          dataIndex: 'groupName',
+        },
+        {
+          title: '加入时价格',
+          align: 'center',
+          dataIndex: 'price',
+        },
+        {
+          title: '当前价格',
+          align: 'center',
+          dataIndex: 'curPrice',
+        },
+        {
+          title: '涨跌幅',
+          align: 'center',
+          dataIndex: 'price',
+        },
+        {
           title: '状态',
           align: 'center',
           dataIndex: 'statusDesc',
@@ -162,12 +188,6 @@ export default {
           title: '描述',
           align: 'center',
           dataIndex: 'remark',
-          customRender: (t) => ellipsis(t),
-        },
-        {
-          title: '区域',
-          align: 'center',
-          dataIndex: 'area',
           customRender: (t) => ellipsis(t),
         },
         {

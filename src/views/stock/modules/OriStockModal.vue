@@ -11,23 +11,48 @@
     >
       <a-spin :spinning="confirmLoading">
         <a-form :form="form">
+          <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="代码">
             <!-- :disabled="!!model.id" -->
             <!-- :readOnly="!!model.id" -->
-            <a-input placeholder="请输入代码" v-decorator="['code', validatorRules.code]" :maxLength="30" />
+            <a-input placeholder="请输入代码" v-decorator="['code', validatorRules.code]" :maxLength="8" @blur.native.capture="getStockInfo"/>
           </a-form-item>
+            </a-col>
+            <a-col :span="6">
+              <a-button type="primary" @onclick="getStockInfo">获取信息</a-button>
+            </a-col>
+          </a-row>
+          <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item label="请选择分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
-            <j-select-group placeholder="请选择分组" :multiple="false" v-decorator="['groupId', {}]" />
+            <j-select-group placeholder="请选择分组" :multiple="false" v-decorator="['groupId', validatorRules.groupId]" />
           </a-form-item>
+          </a-col>
+          </a-row>
+          <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="名称">
             <a-input placeholder="" v-decorator="['name', {}]" :maxLength="100" :disabled="true"/>
           </a-form-item>
+          </a-col>
+          </a-row>
+           <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区域">
             <a-input placeholder="" v-decorator="['area', {}]" :maxLength="100" :disabled="true"/>
           </a-form-item>
+          </a-col>
+          </a-row>
+          <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="当前价格">
             <a-input placeholder="" v-decorator="['price', {}]" :maxLength="100" :disabled="true"/>
           </a-form-item>
+          </a-col>
+          </a-row>
+          <a-row style="width: 80%; margin-left: 9%">
+            <a-col :span="18">
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="分组描述">
             <a-textarea
               placeholder="请输入分组描述"
@@ -36,6 +61,8 @@
               :maxLength="100"
             />
           </a-form-item>
+           </a-col>
+          </a-row>
         </a-form>
       </a-spin>
     </a-modal>
@@ -44,7 +71,7 @@
 
 <script>
 import pick from 'lodash.pick'
-import { httpAction, postAction } from '@/api/manage'
+import { httpAction, postActio,getAction } from '@/api/manage'
 import { validateDuplicateValue } from '@/utils/util'
 import { addStock, editStock } from '@/api/api'
 import JSelectGroup from '@/components/jeecgbiz/JSelectGroup'
@@ -89,11 +116,12 @@ export default {
         },
         code: { rules: [{ required: true, message: '请输入代码!' }] },
         groupId: { rules: [{ required: true, message: '请选择分组!' }] },
-        remark: { rules: [{ required: false, message: '请输入描述!' }] },
+        remark: { rules: [{ required: true, message: '请输入描述!' }] },
       },
       url: {
         add: '/erp/oriStock/add',
         edit: '/erp/oriStock/edit',
+        getStockInfo: '/erp/stockApi/getStockInfo',
       },
       differentMsg: '',
       differentMsgVisible: false,
@@ -124,6 +152,23 @@ export default {
           pick(this.model, 'code', 'name', 'remark','area','price')
         )
       })
+    },
+    getStockInfo(){
+      var stockCode = this.form.getFieldValue('code')
+      console.log(stockCode)
+      var that = this;
+      if(!!stockCode){
+          getAction(that.url.getStockInfo, { code: stockCode }).then((res) => {
+          if (res.success) {
+            that.$message.success(res.message)
+                 that.form.setFieldsValue({name:res.result[0]});
+                 that.form.setFieldsValue({area:res.result[1]});
+                 that.form.setFieldsValue({ price: res.result[2]});
+              } else {
+                that.$message.warning(res.message)
+              }
+          })
+      }
     },
     // 确定
     handleOk() {
