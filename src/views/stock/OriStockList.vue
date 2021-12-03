@@ -18,7 +18,7 @@
             <a-form-item label="代码">
               <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
               <a-auto-complete
-                v-model.trim="queryParam.code"
+                v-model.trim="queryParam.symbol"
                 placeholder="请输入代码进行查询"
               >
               </a-auto-complete>
@@ -131,6 +131,7 @@ export default {
   data() {
     let ellipsis = (v, l = 20) => <j-ellipsis value={v} length={l} />
     return {
+      timer:'',
       description: '股票管理',
       // 表头
       result: [],
@@ -151,7 +152,7 @@ export default {
         {
           title: '代码',
           align: 'center',
-          dataIndex: 'code',
+          dataIndex: 'symbol',
         },
         {
           title: '区域',
@@ -177,7 +178,7 @@ export default {
         {
           title: '涨跌幅',
           align: 'center',
-          dataIndex: 'price',
+          dataIndex: 'percent',
         },
         {
           title: '状态',
@@ -274,6 +275,29 @@ export default {
       //loadData(1)
       this.searchQuery()
     },
+    getStockRealtimeInfo(){
+      var that = this
+      var symbols = "";
+      let dataSource = that.dataSource;
+      for(var a = 0; a < dataSource.length; a++){
+        symbols = symbols + dataSource[a].symbol + ","
+      }
+      getAction('/erp/stockApi/getStockRealtimeInfo',{symbols:symbols}).then((res) => {
+        if (res.success) {
+          for(var a = 0; a < that.columns; a++){
+            that.columns[a].price = res.result.records[a].price;
+          }
+          //that.$message.warning(res.message);
+          
+        }
+      })
+    },
+  },
+  mounted() {
+      this.timer = setInterval(this.getStockRealtimeInfo, 3000);
+  },
+  beforeDestroy() {
+      getStockRealTimeInfoInterval(this.timer);
   },
 }
 </script>

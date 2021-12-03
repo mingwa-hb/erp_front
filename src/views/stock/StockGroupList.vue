@@ -38,9 +38,11 @@
         :action="importExcelUrl"
         @change="handleImportExcelOneByOne"
       >
-        <a-button type="primary" icon="import">导入</a-button>
+      <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-button type="primary" icon="download" @click="downLoadTemplate()">下载模板</a-button>
+      <a-button @click="syncXueqiuGroups" type="primary" icon="plus">同步雪球组</a-button>
+      <a-button @click="syncXueqiuStocksPerGroup" type="primary" icon="plus">同步雪球股票</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -237,6 +239,26 @@ export default {
       console.log('onSelect', value)
       //loadData(1)
       this.searchQuery()
+    },
+    syncXueqiuGroups(){
+      var that = this
+      getAction('/erp/xueqiuDataSync/syncGroups').then((res) => {
+        if (res.success) {
+          that.$message.warning(res.message)
+        }
+      })
+    },
+    syncXueqiuStocksPerGroup(){
+      var that = this
+      var ids = "";
+      for (var a = 0; a < this.selectedRowKeys.length; a++) {
+        ids += this.selectedRowKeys[a] + ",";
+      }
+      getAction('/erp/xueqiuDataSync/syncByGroupId',{ids:ids}).then((res) => {
+        if (res.success) {
+          that.$message.warning(res.message)
+        }
+      })
     },
   },
 }

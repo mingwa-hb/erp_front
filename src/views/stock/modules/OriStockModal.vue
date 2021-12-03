@@ -16,7 +16,7 @@
           <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="代码">
             <!-- :disabled="!!model.id" -->
             <!-- :readOnly="!!model.id" -->
-            <a-input placeholder="请输入代码" v-decorator="['code', validatorRules.code]" :maxLength="8" @blur.native.capture="getStockInfo"/>
+            <a-input placeholder="请输入代码" v-decorator="['symbol', validatorRules.symbol]" :maxLength="8" @blur.native.capture="getStockInfo"/>
           </a-form-item>
             </a-col>
             <a-col :span="6">
@@ -114,7 +114,7 @@ export default {
             },
           ],
         },
-        code: { rules: [{ required: true, message: '请输入代码!' }] },
+        symbol: { rules: [{ required: true, message: '请输入代码!' }] },
         groupId: { rules: [{ required: true, message: '请选择分组!' }] },
         remark: { rules: [{ required: true, message: '请输入描述!' }] },
       },
@@ -149,16 +149,16 @@ export default {
       this.visible = true
       this.$nextTick(() => {
         this.form.setFieldsValue(
-          pick(this.model, 'code', 'name', 'remark','area','price')
+          pick(this.model, 'symbol', 'name', 'remark','area','price')
         )
       })
     },
     getStockInfo(){
-      var stockCode = this.form.getFieldValue('code')
+      var stockCode = this.form.getFieldValue('symbol')
       console.log(stockCode)
       var that = this;
       if(!!stockCode){
-          getAction(that.url.getStockInfo, { code: stockCode }).then((res) => {
+          getAction(that.url.getStockInfo, { symbol: stockCode }).then((res) => {
           if (res.success) {
             that.$message.success(res.message)
                  that.form.setFieldsValue({name:res.result[0]});
@@ -178,7 +178,7 @@ export default {
       this.form.validateFields((err, values) => {
       if (!err) {
         that.confirmLoading = true
-        values.code = (values.code || '').trim()
+        values.symbol = (values.symbol || '').trim()
         values.name = (values.name || '').trim()
         values.remark = (values.remark || '').trim()
         let formData = Object.assign(this.model, values)
@@ -233,7 +233,7 @@ export default {
           this.form.setFieldsValue({alias: this.stockObj.aareaias})
       }
        if (this.stockGroupObj.price) {
-        this.form.setFieldsValue({ name: this.stockObj.price })
+        this.form.setFieldsValue({ price: this.stockObj.price })
       }
     },
   },
