@@ -8,32 +8,14 @@
             <a-form-item label="分组名称">
               <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
               <a-auto-complete
-                v-model.trim="queryParam.groupName"
+                v-model.trim="queryParam.name"
+                @search="handleSearch"
                 placeholder="请输入分组名称进行查询"
               >
               </a-auto-complete>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="代码">
-              <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
-              <a-auto-complete
-                v-model.trim="queryParam.symbol"
-                placeholder="请输入代码进行查询"
-              >
-              </a-auto-complete>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="名称">
-              <!-- <a-input placeholder="请输入分组名称进行查询" v-model.trim="queryParam.companyName"/>-->
-              <a-auto-complete
-                v-model.trim="queryParam.name"
-                placeholder="请输入名称进行查询"
-              >
-              </a-auto-complete>
-            </a-form-item>
-          </a-col>
+
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -56,9 +38,11 @@
         :action="importExcelUrl"
         @change="handleImportExcelOneByOne"
       >
-        <a-button type="primary" icon="import">导入</a-button>
+      <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-button type="primary" icon="download" @click="downLoadTemplate()">下载模板</a-button>
+      <a-button @click="syncXueqiuGroups" type="primary" icon="plus">同步雪球组</a-button>
+      <a-button @click="syncXueqiuStocksPerGroup" type="primary" icon="plus">同步雪球股票</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -99,11 +83,11 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?(会被放到回收站!)" @confirm="() => deleteSingle(record.id)">
+          <a-popconfirm title="确定删除吗?(与该分组关联的自选股都会被放到回收站!)" @confirm="() => deleteSingle(record.id)">
             <a>删除</a>
           </a-popconfirm>
            <a-divider type="vertical" />
-          <a-popconfirm title="确定删除吗?(会删掉数据!)" @confirm="() => deleteRealSingle(record.id)">
+          <a-popconfirm title="确定删除吗?(与该分组关联的自选股都会被放到回收站!)" @confirm="() => deleteRealSingle(record.id)">
             <a>硬删除</a>
           </a-popconfirm>
         </span>
@@ -112,27 +96,26 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <ori-stock-modal ref="modalForm" @ok="modalFormOk" />
+    <stock-group-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
 import JEllipsis from '@/components/jeecg/JEllipsis'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-import OriStockModal from './modules/OriStockModal'
+import StockPositionModal from './modules/StockPositionModal'
 import { deleteAction, getAction } from '@/api/manage'
 import axios from 'axios'
 import moment from 'moment'
 
 export default {
-  name: 'OriStock',
+  name: 'StockPosition',
   mixins: [JeecgListMixin],
-  components: { JEllipsis, OriStockModal },
+  components: { JEllipsis, StockPositionModal },
   data() {
     let ellipsis = (v, l = 20) => <j-ellipsis value={v} length={l} />
     return {
-      timer:'',
-      description: '股票管理',
+      description: '持仓管理',
       // 表头
       result: [],
       columns: [
@@ -145,76 +128,44 @@ export default {
           customRender: (t, r, index) => index + 1,
         },
         {
-          title: '名称',
+          title: '股票名称',
           align: 'center',
           dataIndex: 'name',
         },
         {
-          title: '代码',
+          title: '股票代码',
           align: 'center',
           dataIndex: 'symbol',
         },
         {
-          title: '区域',
+          title: '数量',
           align: 'center',
-          dataIndex: 'area',
-          customRender: (t) => ellipsis(t),
+          dataIndex: 'totalNum',
         },
         {
-          title: '分组',
+          title: '平均成本',
           align: 'center',
-          dataIndex: 'groupName',
+          dataIndex: 'avgCost',
         },
         {
-          title: '加入时价格',
+          title: '总值',
           align: 'center',
-          dataIndex: 'price',
+          dataIndex: 'totalMoney',
         },
         {
-          title: '当前价格',
+          title: '盈利（亏损）金额',
           align: 'center',
-          dataIndex: 'curPrice',
+          dataIndex: 'profit',
         },
         {
-          title: '涨跌幅',
+          title: '当前盈利（亏损）比',
           align: 'center',
           dataIndex: 'percent',
-        },
-        {
-          title: '今日最高价',
-          align: 'center',
-          dataIndex: 'highestPrice',
-        },
-        {
-          title: '今日最低价',
-          align: 'center',
-          dataIndex: 'lowestPrice',
-        },
-        {
-          title: '盘口时间',
-          align: 'center',
-          dataIndex: 'tradeTime',
-        },
-        {
-          title: '状态',
-          align: 'center',
-          dataIndex: 'statusDesc',
-        },
-        {
-          title: '描述',
-          align: 'center',
-          dataIndex: 'remark',
-          customRender: (t) => ellipsis(t),
         },
         {
           title: '创建人',
           align: 'center',
           dataIndex: 'createBy',
-        },
-        {
-          title: '创建时间',
-          align: 'center',
-          dataIndex: 'createTime',
         },
         {
           title: '操作',
@@ -225,12 +176,12 @@ export default {
         },
       ],
       url: {
-        list: '/erp/oriStock/list',
-        delete: '/erp/oriStock/delete',
-        deleteBatch: '/erp/oriStock/deleteBatch',
-        realDelete: '/erp/oriStock/realDelete',
-        exportXlsUrl: 'erp/oriStock/exportXls',
-        importExcelUrl: 'erp/oriStock/importExcel',
+        list: '/erp/stockPosition/list',
+        delete: '/erp/stockPosition/delete',
+        deleteBatch: '/erp/stockPosition/deleteBatch',
+        realDelete: '/erp/stockPosition/realDelete',
+        exportXlsUrl: 'erp/stockPosition/exportXls',
+        importExcelUrl: 'erp/stockPosition/importExcel',
       },
     }
   },
@@ -247,7 +198,7 @@ export default {
           var that = this
             this.$confirm({
               title: '请确认是否删除！',
-              content: '点击OK按钮后，自选股被放入回收站!',
+              content: '点击OK按钮后，改持仓状态会变为已抛!',
               okType: 'danger',
               okText: '删除',
               cancelText: '取消',
@@ -268,7 +219,7 @@ export default {
           var that = this
             this.$confirm({
               title: '请确认是否真正删除！',
-              content: '点击OK按钮后，自选股会被真正删除!',
+              content: '点击OK按钮后，该持仓会真正删除!',
               okType: 'danger',
               okText: '删除',
               cancelText: '取消',
@@ -285,39 +236,45 @@ export default {
               onCancel() {},
             })
     },
+    handleSearch(value) {
+      // console.log('handleSearch', value);
+      //this.result  =  ['上海', '武汉', '北京'];
+      let paramJson = {
+        name: value,
+      }
+      console.log('value:', value)
+      getAction('/erp/stockGroup/list', paramJson).then((res) => {
+        if (res.success) {
+          this.result = res.result
+        }
+      })
+    },
     onSelect(value) {
       console.log('onSelect', value)
       //loadData(1)
       this.searchQuery()
     },
-    /*
-    getStockRealtimeInfo(){
+    syncXueqiuGroups(){
       var that = this
-      var symbols = "";
-      let dataSource = that.dataSource;
-      for(var a = 0; a < dataSource.length; a++){
-        symbols = symbols + dataSource[a].symbol + ","
-      }
-      getAction('/erp/stockApi/getStockRealtimeInfo',{symbols:symbols}).then((res) => {
+      getAction('/erp/xueqiuDataSync/syncGroups').then((res) => {
         if (res.success) {
-          for(var a = 0; a < that.columns; a++){
-            that.columns[a].price = res.result.records[a].price;
-          }
-          //that.$message.warning(res.message);
-          
+          that.$message.warning(res.message)
         }
       })
     },
-    */
+    syncXueqiuStocksPerGroup(){
+      var that = this
+      var ids = "";
+      for (var a = 0; a < this.selectedRowKeys.length; a++) {
+        ids += this.selectedRowKeys[a] + ",";
+      }
+      getAction('/erp/xueqiuDataSync/syncByGroupId',{ids:ids}).then((res) => {
+        if (res.success) {
+          that.$message.warning(res.message)
+        }
+      })
+    },
   },
-  /*
-  mounted() {
-      this.timer = setInterval(this.getStockRealtimeInfo, 3000);
-  },
-  beforeDestroy() {
-      getStockRealTimeInfoInterval(this.timer);
-  },
-  */
 }
 </script>
 <style scoped>

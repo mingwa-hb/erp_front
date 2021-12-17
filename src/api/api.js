@@ -178,7 +178,7 @@ const addStockGroup = (params) => postAction("/erp/stockGroup/add",params);
 const editStockGroup = (params) => postAction("/erp/stockGroup/edit",params);
 
 const addStock = (params) => postAction("/erp/oriStock/add",params);
-const editStock = (parms) => postAction("/erp/oriStock/edit",params);
+const editStock = (params) => postAction("/erp/oriStock/edit",params);
 
 
 // 中转HTTP请求
