@@ -14,41 +14,31 @@
           <a-row style="width: 80%; margin-left: 9%">
             <a-col :span="18">
               <a-form-item label="请选择股票" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                <j-select-group placeholder="请选择股票" :multiple="false" v-decorator="['symbol', validatorRules.groupId]" />
+                <j-select-symbol placeholder="请选择股票" :multiple="false" v-decorator="['symbol', validatorRules.symbol]" />
               </a-form-item>
             </a-col>
           </a-row>
+          <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-select
+              v-decorator="['status', validatorRules.status]"
+              placeholder="请选择持仓状态"
+              :getPopupContainer="(target) => target.parentNode"
+            >
+              <a-select-option :value="0">持仓</a-select-option>
+              <a-select-option :value="1">已出</a-select-option>
+              <a-select-option :value="2">待持仓</a-select-option>
+            </a-select>
+          </a-form-item>
           <a-row style="width: 80%; margin-left: 9%">
             <a-col :span="18">
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="买入数量">
-            <a-input placeholder="" v-decorator="['num', {}]" :maxLength="100" :disabled="true"/>
-          </a-form-item>
-          </a-col>
-          </a-row>
-           <a-row style="width: 80%; margin-left: 9%">
-            <a-col :span="18">
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="买入价格" >
-            <a-input placeholder="" v-decorator="['buyPrice', {}]" :maxLength="100" :disabled="!!model.id"/>
-          </a-form-item>
-          </a-col>
-          </a-row>
-          <a-row style="width: 80%; margin-left: 9%">
-            <a-col :span="18">
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="卖出价格" v-if="model.id">>
-            <a-input placeholder="" v-decorator="['price', {}]" :maxLength="100" />
-          </a-form-item>
-          </a-col>
-          </a-row>
-          <a-row style="width: 80%; margin-left: 9%">
-            <a-col :span="18">
-          <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="买入理由">
-            <a-textarea
-              placeholder="买入理由"
-              v-decorator="['remark', validatorRules.remark]"
-              :rows="4"
-              :maxLength="100"
-            />
-          </a-form-item>
+              <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="持有理由">
+                <a-textarea
+                  placeholder="持有理由"
+                  v-decorator="['remark', validatorRules.remark]"
+                  :rows="4"
+                  :maxLength="100"
+                />
+              </a-form-item>
            </a-col>
           </a-row>
         </a-form>
@@ -62,19 +52,18 @@ import pick from 'lodash.pick'
 import { httpAction, postAction,getAction } from '@/api/manage'
 import { validateDuplicateValue } from '@/utils/util'
 import { addPosition, editPosition } from '@/api/api'
-//import JSelectSymbol from '@/components/jeecgbiz/JSelectSymbol'
+import JSelectSymbol from '@/components/jeecgbiz/JSelectSymbol'
 
 export default {
   name: 'StockPositionModal',
   components: {
-    //JSelectSymbol,
+    JSelectSymbol,
   },
   data() {
     return {
       title: '操作',
       visible: false,
-      stockObj: {},
-      groupId:'',
+      symbol:'',
       model: {},
       labelCol: {
         xs: { span: 24 },
@@ -103,13 +92,13 @@ export default {
             },
           ],
         },
-        symbol: { rules: [{ required: true, message: '请输入代码!' }] },
-        groupId: { rules: [{ required: true, message: '请选择分组!' }] },
-        remark: { rules: [{ required: true, message: '请输入描述!' }] },
+        symbol: { rules: [{ required: true, message: '请选择股票!' }] },
+        status: { rules: [{ required: true, message: '请选择持仓状态!' }] },
+        remark: { rules: [{ required: true, message: '请填写持有理由!' }] },
       },
       url: {
-        add: '/erp/oriStock/add',
-        edit: '/erp/oriStock/edit',
+        add: '/erp/stockPosition/add',
+        edit: '/erp/stockPosition/edit',
         getStockInfo: '/erp/stockApi/getStockInfo',
       },
       differentMsg: '',
@@ -133,22 +122,22 @@ export default {
       } else {
         this.visiblekey = false
       }
-      this.groupId = record.groupId
+      this.symbol = record.symbol
       this.form.resetFields()
       this.model = Object.assign({}, record)
       this.visible = true
       this.$nextTick(() => {
         this.form.setFieldsValue(
-          pick(this.model, 'symbol', 'name', 'remark','area','price','groupId')
+          pick(this.model, 'symbol', 'remark')
         )
       })
       if (record.hasOwnProperty('id')){
-        this.fillGroupField();
+        this.fillSymbolField();
       }
     },
-    fillGroupField(){
+    fillSymbolField(){
       setTimeout(() => {
-        getAction(`/erp/stockGroup/getNameById/${this.groupId}`)
+        getAction(`/erp/oriStock/getNameBySymbol/${this.symbol}`)
           .then((res) => {
             if (res.success) {
               document.getElementsByClassName('ant-select-selection__choice__content').innerHTML = res.result
@@ -182,14 +171,13 @@ export default {
       if (!err) {
         that.confirmLoading = true
         values.symbol = (values.symbol || '').trim()
-        values.name = (values.name || '').trim()
         values.remark = (values.remark || '').trim()
         let formData = Object.assign(this.model, values)
         let obj
         if (!this.model.id) {
-            obj = addStock(formData)
+            obj = addPosition(formData)
         } else {
-            obj = editStock(formData)
+            obj = editPosition(formData)
         }
 
         obj

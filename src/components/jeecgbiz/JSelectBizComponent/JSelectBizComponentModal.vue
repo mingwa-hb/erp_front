@@ -168,8 +168,8 @@ export default {
       /* 分页参数 */
       ipagination: {
         current: 1,
-        pageSize: 5,
-        pageSizeOptions: ['5', '10', '20', '30'],
+        pageSize: 10,
+        pageSizeOptions: ['10', '20', '40', '60'],
         showTotal: (total, range) => {
           return range[0] + '-' + range[1] + ' 共' + total + '条'
         },

@@ -41,8 +41,6 @@
       <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-button type="primary" icon="download" @click="downLoadTemplate()">下载模板</a-button>
-      <a-button @click="syncXueqiuGroups" type="primary" icon="plus">同步雪球组</a-button>
-      <a-button @click="syncXueqiuStocksPerGroup" type="primary" icon="plus">同步雪球股票</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -96,7 +94,7 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <stock-group-modal ref="modalForm" @ok="modalFormOk" />
+    <stock-position-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 

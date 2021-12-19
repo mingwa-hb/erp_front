@@ -180,6 +180,9 @@ const editStockGroup = (params) => postAction("/erp/stockGroup/edit",params);
 const addStock = (params) => postAction("/erp/oriStock/add",params);
 const editStock = (params) => postAction("/erp/oriStock/edit",params);
 
+const addPosition = (params) => postAction("erp/stockPosition/add",params);
+const editPoistion = (params) => postAction("/erp/stockPosition/edit",params);
+
 
 // 中转HTTP请求
 export const transitRESTful = {
@@ -281,4 +284,6 @@ export {
   editStockGroup,
   addStock,
   editStock,
+  addPosition,
+  editPoistion,
 }
